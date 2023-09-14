@@ -1,8 +1,9 @@
 import numpy as np
+from sklearn.metrics import mean_squared_error
 
 from dataset import Dataset
 from preprocess import Preprocess
-from manual_model import ManualModel
+from model.manual_model import ManualModel
 
 
 features = [
@@ -16,21 +17,18 @@ if __name__ == "__main__":
 
     preprocess.remove_nulls()
     preprocess.remove_duplicates()
-    preprocess.normalization(["sex"], ["shell_weight", "rings"])
+    preprocess.normalization(["sex"], ["rings"])
     preprocess.categorical_to_numerical("sex")
     preprocess.drop_columns(["sex"])
-    preprocess.reorder_columns(["shell_weight", "rings"])
+    preprocess.reorder_columns(["rings"])
 
     train_x, train_y, test_x, test_y = dataset.train_test_split(["rings"])
-
-    print(train_x.shape, train_y.shape, test_x.shape, test_y.shape)
 
     model = ManualModel(
         0.01, 0.00001, 10000,
         np.zeros([train_x.shape[1]+1, 1])
     )
 
-    cost = model.fit(train_x, train_y)
-
-    print(model.compute_cost(train_x, train_y), model.compute_cost(test_x, test_y))
-    print(preprocess.denormalize_prediction(model.predict(test_x)))
+    train_pred = model.fit_predict(train_x, train_y)
+    print("mse [train] - part1", mean_squared_error(train_y, train_pred))
+    print("mse [test] - part1", mean_squared_error(test_y, model.predict(test_x)))

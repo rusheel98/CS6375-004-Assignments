@@ -31,8 +31,6 @@ class Preprocess:
         self.target_mean = target.mean().to_numpy()
         self.target_std = target.std().to_numpy()
 
-        print(self.target_mean, self.target_std)
-
         target = (target - self.target_mean) / self.target_std
 
         self.dataset.data = pd.concat([non_ignored_cols, ignored_cols, target], axis='columns')

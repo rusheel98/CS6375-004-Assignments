@@ -1,7 +1,9 @@
 import numpy as np
 
+from .base_model import BaseModel
 
-class ManualModel:
+
+class ManualModel(BaseModel):
     def __init__(
             self,
             alpha: float,
@@ -25,7 +27,13 @@ class ManualModel:
         x_one = np.insert(x, 0, [1], axis=1)
         cost, i = [], 0
         while i < self.iters:
-            self.theta -= np.expand_dims((self.alpha/x.shape[0]) * np.sum(x_one * (self.predict(x) - y), axis=0), axis=1)
+            self.theta -= np.expand_dims(
+                (self.alpha/x.shape[0]) * np.sum(
+                    x_one * (self.predict(x) - y),
+                    axis=0
+                ),
+                axis=1
+            )
             cost.append(self.compute_cost(x, y))
 
             if i > 0 and np.abs(cost[i - 1] - cost[i]) < self.threshold:
@@ -36,8 +44,3 @@ class ManualModel:
         print(f"Stopped after {i} iterations")
 
         return np.array(cost)
-
-    # def get_cost(self, x: np.array, y: np.array) -> float:
-    #     ones = np.ones([x.shape[0], 1])
-    #     x = np.concatenate((ones, x), axis=1)
-    #     return self._compute_cost(x, y)
