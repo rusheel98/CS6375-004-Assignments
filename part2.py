@@ -25,6 +25,8 @@ if __name__ == "__main__":
 
     model = LinearModel(0.01, 0.001, 10000, 0.00001)
 
+    print(model.get_coefs())
+
     train_pred = model.fit_predict(train_x, train_y)
     print("mse [train] - part2", mean_squared_error(train_y, train_pred))
     print("mse [test] - part2", mean_squared_error(test_y, model.predict(test_x)))
