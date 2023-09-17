@@ -1,8 +1,184 @@
+lr: 0.1, threshold: 1e-07, max_itrs: 10000
+train_mse: 0.4756, test_mse: 0.4606
+train_adj_r_sqrd: 0.5361, test_adj_r_sqrd: 0.4867
+--------------------------------------------------
+lr: 0.1, threshold: 1e-08, max_itrs: 10000
+train_mse: 0.4755, test_mse: 0.4606
+train_adj_r_sqrd: 0.5361, test_adj_r_sqrd: 0.4868
+--------------------------------------------------
+lr: 0.1, threshold: 1e-09, max_itrs: 10000
+train_mse: 0.4755, test_mse: 0.4606
+train_adj_r_sqrd: 0.5361, test_adj_r_sqrd: 0.4867
+--------------------------------------------------
+lr: 0.01, threshold: 1e-08, max_itrs: 50000
+train_mse: 0.4756, test_mse: 0.4606
+train_adj_r_sqrd: 0.5361, test_adj_r_sqrd: 0.4867
+--------------------------------------------------
+lr: 0.01, threshold: 1e-09, max_itrs: 50000
+train_mse: 0.4756, test_mse: 0.4606
+train_adj_r_sqrd: 0.5361, test_adj_r_sqrd: 0.4868
+--------------------------------------------------
+lr: 0.01, threshold: 1e-09, max_itrs: 100000
+train_mse: 0.4755, test_mse: 0.4606
+train_adj_r_sqrd: 0.5361, test_adj_r_sqrd: 0.4868
+--------------------------------------------------
+lr: 0.001, threshold: 1e-09, max_itrs: 500000
+train_mse: 0.4756, test_mse: 0.4606
+train_adj_r_sqrd: 0.5361, test_adj_r_sqrd: 0.4867
+--------------------------------------------------
 lr: 0.1, threshold: 1e-06, max_itrs: 10000
 train_mse: 0.4763, test_mse: 0.4613
 train_adj_r_sqrd: 0.5354, test_adj_r_sqrd: 0.486
 --------------------------------------------------
+lr: 0.01, threshold: 1e-07, max_itrs: 50000
+train_mse: 0.4763, test_mse: 0.4613
+train_adj_r_sqrd: 0.5354, test_adj_r_sqrd: 0.486
+--------------------------------------------------
+lr: 0.001, threshold: 1e-08, max_itrs: 500000
+train_mse: 0.4763, test_mse: 0.4613
+train_adj_r_sqrd: 0.5354, test_adj_r_sqrd: 0.486
+--------------------------------------------------
+lr: 0.01, threshold: 1e-07, max_itrs: 10000
+train_mse: 0.4806, test_mse: 0.4664
+train_adj_r_sqrd: 0.5312, test_adj_r_sqrd: 0.4803
+--------------------------------------------------
+lr: 0.01, threshold: 1e-08, max_itrs: 10000
+train_mse: 0.4806, test_mse: 0.4664
+train_adj_r_sqrd: 0.5312, test_adj_r_sqrd: 0.4803
+--------------------------------------------------
+lr: 0.01, threshold: 1e-09, max_itrs: 10000
+train_mse: 0.4806, test_mse: 0.4664
+train_adj_r_sqrd: 0.5312, test_adj_r_sqrd: 0.4803
+--------------------------------------------------
+lr: 0.001, threshold: 1e-08, max_itrs: 100000
+train_mse: 0.4806, test_mse: 0.4664
+train_adj_r_sqrd: 0.5312, test_adj_r_sqrd: 0.4803
+--------------------------------------------------
+lr: 0.001, threshold: 1e-09, max_itrs: 100000
+train_mse: 0.4806, test_mse: 0.4664
+train_adj_r_sqrd: 0.5312, test_adj_r_sqrd: 0.4803
+--------------------------------------------------
+lr: 0.0001, threshold: 1e-09, max_itrs: 1000000
+train_mse: 0.4806, test_mse: 0.4664
+train_adj_r_sqrd: 0.5312, test_adj_r_sqrd: 0.4803
+--------------------------------------------------
 lr: 0.1, threshold: 1e-05, max_itrs: 10000
 train_mse: 0.4832, test_mse: 0.4695
 train_adj_r_sqrd: 0.5286, test_adj_r_sqrd: 0.4768
+--------------------------------------------------
+lr: 0.01, threshold: 1e-06, max_itrs: 10000
+train_mse: 0.4832, test_mse: 0.4695
+train_adj_r_sqrd: 0.5286, test_adj_r_sqrd: 0.4768
+--------------------------------------------------
+lr: 0.001, threshold: 1e-07, max_itrs: 100000
+train_mse: 0.4832, test_mse: 0.4695
+train_adj_r_sqrd: 0.5286, test_adj_r_sqrd: 0.4768
+--------------------------------------------------
+lr: 0.0001, threshold: 1e-08, max_itrs: 1000000
+train_mse: 0.4832, test_mse: 0.4695
+train_adj_r_sqrd: 0.5286, test_adj_r_sqrd: 0.4768
+--------------------------------------------------
+lr: 0.001, threshold: 1e-07, max_itrs: 50000
+train_mse: 0.4853, test_mse: 0.4717
+train_adj_r_sqrd: 0.5266, test_adj_r_sqrd: 0.4744
+--------------------------------------------------
+lr: 0.001, threshold: 1e-08, max_itrs: 50000
+train_mse: 0.4853, test_mse: 0.4717
+train_adj_r_sqrd: 0.5266, test_adj_r_sqrd: 0.4744
+--------------------------------------------------
+lr: 0.001, threshold: 1e-09, max_itrs: 50000
+train_mse: 0.4853, test_mse: 0.4717
+train_adj_r_sqrd: 0.5266, test_adj_r_sqrd: 0.4744
+--------------------------------------------------
+lr: 0.0001, threshold: 1e-08, max_itrs: 500000
+train_mse: 0.4853, test_mse: 0.4717
+train_adj_r_sqrd: 0.5266, test_adj_r_sqrd: 0.4744
+--------------------------------------------------
+lr: 0.0001, threshold: 1e-09, max_itrs: 500000
+train_mse: 0.4853, test_mse: 0.4717
+train_adj_r_sqrd: 0.5266, test_adj_r_sqrd: 0.4744
+--------------------------------------------------
+lr: 0.01, threshold: 1e-05, max_itrs: 10000
+train_mse: 0.4943, test_mse: 0.472
+train_adj_r_sqrd: 0.5178, test_adj_r_sqrd: 0.4741
+--------------------------------------------------
+lr: 0.001, threshold: 1e-06, max_itrs: 50000
+train_mse: 0.4943, test_mse: 0.472
+train_adj_r_sqrd: 0.5178, test_adj_r_sqrd: 0.4741
+--------------------------------------------------
+lr: 0.0001, threshold: 1e-07, max_itrs: 500000
+train_mse: 0.4943, test_mse: 0.472
+train_adj_r_sqrd: 0.5178, test_adj_r_sqrd: 0.4741
+--------------------------------------------------
+lr: 0.001, threshold: 1e-06, max_itrs: 10000
+train_mse: 0.509, test_mse: 0.4756
+train_adj_r_sqrd: 0.5034, test_adj_r_sqrd: 0.4701
+--------------------------------------------------
+lr: 0.001, threshold: 1e-07, max_itrs: 10000
+train_mse: 0.509, test_mse: 0.4756
+train_adj_r_sqrd: 0.5034, test_adj_r_sqrd: 0.4701
+--------------------------------------------------
+lr: 0.001, threshold: 1e-08, max_itrs: 10000
+train_mse: 0.509, test_mse: 0.4756
+train_adj_r_sqrd: 0.5034, test_adj_r_sqrd: 0.4701
+--------------------------------------------------
+lr: 0.001, threshold: 1e-09, max_itrs: 10000
+train_mse: 0.509, test_mse: 0.4756
+train_adj_r_sqrd: 0.5034, test_adj_r_sqrd: 0.4701
+--------------------------------------------------
+lr: 0.0001, threshold: 1e-07, max_itrs: 100000
+train_mse: 0.509, test_mse: 0.4756
+train_adj_r_sqrd: 0.5034, test_adj_r_sqrd: 0.4701
+--------------------------------------------------
+lr: 0.0001, threshold: 1e-08, max_itrs: 100000
+train_mse: 0.509, test_mse: 0.4756
+train_adj_r_sqrd: 0.5034, test_adj_r_sqrd: 0.4701
+--------------------------------------------------
+lr: 0.0001, threshold: 1e-09, max_itrs: 100000
+train_mse: 0.509, test_mse: 0.4756
+train_adj_r_sqrd: 0.5034, test_adj_r_sqrd: 0.4701
+--------------------------------------------------
+lr: 0.001, threshold: 1e-05, max_itrs: 10000
+train_mse: 0.5346, test_mse: 0.4898
+train_adj_r_sqrd: 0.4785, test_adj_r_sqrd: 0.4542
+--------------------------------------------------
+lr: 0.0001, threshold: 1e-06, max_itrs: 100000
+train_mse: 0.5346, test_mse: 0.4898
+train_adj_r_sqrd: 0.4785, test_adj_r_sqrd: 0.4542
+--------------------------------------------------
+lr: 0.0001, threshold: 1e-06, max_itrs: 50000
+train_mse: 0.547, test_mse: 0.4983
+train_adj_r_sqrd: 0.4664, test_adj_r_sqrd: 0.4448
+--------------------------------------------------
+lr: 0.0001, threshold: 1e-07, max_itrs: 50000
+train_mse: 0.547, test_mse: 0.4983
+train_adj_r_sqrd: 0.4664, test_adj_r_sqrd: 0.4448
+--------------------------------------------------
+lr: 0.0001, threshold: 1e-08, max_itrs: 50000
+train_mse: 0.547, test_mse: 0.4983
+train_adj_r_sqrd: 0.4664, test_adj_r_sqrd: 0.4448
+--------------------------------------------------
+lr: 0.0001, threshold: 1e-09, max_itrs: 50000
+train_mse: 0.547, test_mse: 0.4983
+train_adj_r_sqrd: 0.4664, test_adj_r_sqrd: 0.4448
+--------------------------------------------------
+lr: 0.0001, threshold: 1e-06, max_itrs: 10000
+train_mse: 0.6441, test_mse: 0.5744
+train_adj_r_sqrd: 0.3717, test_adj_r_sqrd: 0.36
+--------------------------------------------------
+lr: 0.0001, threshold: 1e-07, max_itrs: 10000
+train_mse: 0.6441, test_mse: 0.5744
+train_adj_r_sqrd: 0.3717, test_adj_r_sqrd: 0.36
+--------------------------------------------------
+lr: 0.0001, threshold: 1e-08, max_itrs: 10000
+train_mse: 0.6441, test_mse: 0.5744
+train_adj_r_sqrd: 0.3717, test_adj_r_sqrd: 0.36
+--------------------------------------------------
+lr: 0.0001, threshold: 1e-09, max_itrs: 10000
+train_mse: 0.6441, test_mse: 0.5744
+train_adj_r_sqrd: 0.3717, test_adj_r_sqrd: 0.36
+--------------------------------------------------
+lr: 0.0001, threshold: 1e-05, max_itrs: 10000
+train_mse: 0.6785, test_mse: 0.6007
+train_adj_r_sqrd: 0.3382, test_adj_r_sqrd: 0.3307
 --------------------------------------------------
