@@ -1,6 +1,7 @@
-from typing import List
-
+import numpy as np
 import pandas as pd
+from typing import List
+import matplotlib.pyplot as plt
 
 
 class Dataset:
@@ -29,3 +30,17 @@ class Dataset:
 
     def correlation(self):
         return self.data.corr()
+
+    def plot_top_features_against_corr(self, n: int = 5):
+        corr = np.squeeze(self.correlation()[["rings"]][: -1], axis=1)
+
+        feature_coefficients = pd.DataFrame({'Feature': [i for i in self.data.columns if i != 'rings'], 'Correlation': corr})
+        feature_coefficients = feature_coefficients.sort_values(by='Correlation', ascending=False)
+        top_features = feature_coefficients.head(n)
+
+        plt.barh(top_features['Feature'], top_features['Correlation'], color='b')
+        plt.xlabel('Correlation with Target')
+        plt.ylabel('Feature')
+        plt.title(f'Top {n} Important Features based on correlation')
+        plt.gca().invert_yaxis()
+        plt.show()
