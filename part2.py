@@ -9,7 +9,7 @@ features = [
 
 
 if __name__ == "__main__":
-    data_path = "./data/abalone.data" if len(sys.argv) == 0 else sys.argv[0]
+    data_path = "./data/abalone.data" if len(sys.argv) == 0 else sys.argv[1]
 
     linear_model_experiments = Experiments(
         Dataset(data_path, features),
