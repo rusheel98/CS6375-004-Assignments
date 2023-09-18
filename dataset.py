@@ -41,6 +41,6 @@ class Dataset:
         plt.barh(top_features['Feature'], top_features['Correlation'], color='b')
         plt.xlabel('Correlation with Target')
         plt.ylabel('Feature')
-        plt.title(f'Top {n} Important Features based on correlation')
+        plt.title('Important Features based on correlation')
         plt.gca().invert_yaxis()
         plt.show()

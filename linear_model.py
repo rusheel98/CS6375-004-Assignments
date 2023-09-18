@@ -1,28 +1,20 @@
 import numpy as np
+from sklearn.linear_model import SGDRegressor
 
-from .base_model import BaseModel
+from base_model import BaseModel
 
 
-class ManualModel(BaseModel):
-    def __init__(
-            self,
-            lr: float,
-            threshold: float,
-            max_iters: int,
-            theta: np.array
-    ):
+class LinearModel(BaseModel):
+    def __init__(self, lr: float, threshold: float, max_iters: int):
         super().__init__(lr, threshold, max_iters)
-        self.theta = theta
-
-    def predict(self, x: np.array) -> np.array:
-        return np.dot(np.insert(x, 0, [1], axis=1), self.theta)
+        self.model = SGDRegressor(eta0=self.lr, penalty=None, max_iter=self.max_iters,
+                                  tol=self.threshold, early_stopping=False, learning_rate='constant', random_state=0)
 
     def fit(self, x: np.array, y: np.array, test_x: np.array = None, test_y: np.array = None) -> np.array:
-        x_one = np.insert(x, 0, [1], axis=1)
+        y = y.ravel()
         cost, test_cost, i = [], [], 0
         while i < self.max_iters:
-            self.theta -= ((self.lr / y.shape[0]) *
-                           np.expand_dims(np.sum(x_one * (self.predict(x) - y), axis=0), axis=1))
+            self.model.partial_fit(x, y)
             cost.append(self.compute_cost(x, y))
 
             if test_x is not None and test_y is not None:
@@ -37,8 +29,11 @@ class ManualModel(BaseModel):
 
         return np.array(cost), np.array(test_cost)
 
+    def predict(self, x):
+        return self.model.predict(x)
+
     def get_num_itrs(self) -> int:
         return self.n_iters_
 
     def get_coefs(self) -> np.array:
-        return np.squeeze(self.theta, axis=1)
+        return np.concatenate((self.model.intercept_, self.model.coef_), axis=0)

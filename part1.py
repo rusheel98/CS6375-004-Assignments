@@ -1,3 +1,4 @@
+import sys
 from dataset import Dataset
 from experiments import Experiments
 
@@ -8,16 +9,14 @@ features = [
 ]
 
 if __name__ == "__main__":
-    features = [
-        "sex", "length", "diameter", "height", "whole_weight",
-        "shucked_weight", "viscera_weight", "shell_weight", "rings"
-    ]
+    data_path = "./data/abalone.data" if len(sys.argv) == 0 else sys.argv[0]
 
     manual_model_experiments = Experiments(
-        Dataset("./data/abalone.data", features),
+        Dataset(data_path, features),
         "./logs/",
-        ["sex"],
+        [],
         ["rings"],
-        "ManualModel"
+        ["sex"],
+        "ManualModel",
     )
     best_manual_model = manual_model_experiments.run()

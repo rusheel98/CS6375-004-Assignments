@@ -1,3 +1,5 @@
+import os
+import sys
 import numpy as np
 import pandas as pd
 from typing import List
@@ -6,13 +8,10 @@ from sklearn.metrics import r2_score
 from sklearn.metrics import mean_squared_error
 
 from dataset import Dataset
-from model.base_model import BaseModel
-from model.linear_model import LinearModel
-from model.manual_model import ManualModel
-
-import os
-
+from base_model import BaseModel
 from preprocess import Preprocess
+from linear_model import LinearModel
+from manual_model import ManualModel
 
 
 class ExperimentData:
@@ -62,7 +61,7 @@ class ExperimentData:
         plt.show()
 
     def plot_top_features_against_coeffs(self, x, n: int = 5):
-        feature_coefficients = pd.DataFrame({'Feature': x.columns[1:, ], 'Coefficient': self.coeffs[1:, ]})
+        feature_coefficients = pd.DataFrame({'Feature': [i for i in x.columns if i != "rings"], 'Coefficient': self.coeffs[1:, ]})
         feature_coefficients = feature_coefficients.sort_values(by='Coefficient', ascending=False)
         top_features = feature_coefficients.head(n)
 
@@ -74,7 +73,7 @@ class ExperimentData:
         plt.show()
 
     def plot_model_line_for_each_feature(self, x, y, cols):
-        bias, coeffs = self.coeffs[0,], self.coeffs[1:, ]
+        bias, coeffs = self.coeffs[0, ], self.coeffs[1:, ]
 
         fig, axes = plt.subplots(2, (len(cols) + 1) // 2, figsize=(15, 6))
         for i in range(2):
@@ -85,7 +84,7 @@ class ExperimentData:
                 top_feature_values_range = np.linspace(np.min(top_feature_values), np.max(top_feature_values), 100)
 
                 # assuming other feature values are 0
-                y_pred_range = top_feature_values_range.reshape(-1, 1) * coeffs[subplot_index,].reshape(-1, 1) + bias
+                y_pred_range = top_feature_values_range.reshape(-1, 1) * coeffs[subplot_index, ].reshape(-1, 1) + bias
 
                 ax = axes[i, j]
                 ax.scatter(top_feature_values, y, alpha=0.5, label='Actual Data')
@@ -96,6 +95,7 @@ class ExperimentData:
 
         plt.tight_layout()
         fig.suptitle(f'Actual Data vs. Regression Line for features ({self.model_name})')
+        plt.subplots_adjust(top=0.85)
         plt.show()
 
     def __str__(self):
@@ -144,7 +144,7 @@ class Experiments:
         self.train_x, self.train_y, self.test_x, self.test_y = self.data.train_test_split(target)
 
         if plot_corr:
-            self.data.plot_top_features_against_corr()
+            self.data.plot_top_features_against_corr(10)
 
     def log_experiment_data(self, experiment_data: List[ExperimentData]):
         path = os.path.join(self.log_path, f"{self.model_name}.txt")
@@ -204,13 +204,15 @@ class Experiments:
 
 
 if __name__ == "__main__":
+    data_path = "./data/abalone.data" if len(sys.argv) == 1 else sys.argv[1]
+
     features = [
         "sex", "length", "diameter", "height", "whole_weight",
         "shucked_weight", "viscera_weight", "shell_weight", "rings"
     ]
 
     manual_model_experiments = Experiments(
-        Dataset("./data/abalone.data", features),
+        Dataset(data_path, features),
         "./logs/",
         [],
         ["rings"],
@@ -221,7 +223,7 @@ if __name__ == "__main__":
     best_manual_model = manual_model_experiments.run()
 
     linear_model_experiments = Experiments(
-        Dataset("./data/abalone.data", features),
+        Dataset(data_path, features),
         "./logs/",
         [],
         ["rings"],
