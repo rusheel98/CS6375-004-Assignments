@@ -41,9 +41,9 @@ class NeuralNetwork:
         self.scaler = StandardScaler()
 
         self.weights_input_hidden = 2 * np.random.rand(input_size, hidden_size) - 1
-        self.bias_hidden = np.zeros((1, hidden_size))
+        self.bias_hidden = 2 * np.random.rand(1, hidden_size) - 1
         self.weights_hidden_output = 2 * np.random.rand(hidden_size, output_size) - 1
-        self.bias_output = np.zeros((1, output_size))
+        self.bias_output = 2 * np.random.rand(1, output_size) - 1
 
         if activation == 'sigmoid':
             self.activation = sigmoid
@@ -111,7 +111,7 @@ class NeuralNetwork:
 
         loss, train_losses, test_losses = [], [], []
 
-        more_count = 0
+        # more_count = 0
 
         for epoch in range(epochs):
             for i in range(len(self.x_train)):
@@ -134,15 +134,15 @@ class NeuralNetwork:
 
             print(f"EPOCH {epoch} - TRAIN LOSS: {train_loss} - TEST LOSS: {test_loss}")
 
-            if train_loss > train_losses[epoch - 1]:
-                more_count += 1
-                if more_count > 10:
-                    break
-            else:
-                more_count = 0
-
-            if epoch > 0 and np.abs(train_loss - train_losses[epoch - 1]) < 0.000001:
-                break
+            # if train_loss > train_losses[epoch - 1]:
+            #     more_count += 1
+            #     if more_count > 10:
+            #         break
+            # else:
+            #     more_count = 0
+            #
+            # if epoch > 0 and np.abs(train_loss - train_losses[epoch - 1]) < 0.000001:
+            #     break
 
     def transform(self, x):
         x = self.preprocess_test(x)
