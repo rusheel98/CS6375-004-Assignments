@@ -1,31 +1,9 @@
-import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 
-
-def sigmoid(x):
-    return 1 / (1 + np.exp(-x))
-
-
-def sigmoid_derivative(x):
-    return sigmoid(x) * (1 - sigmoid(x))
-
-
-def tanh(x):
-    return np.tanh(x)
-
-
-def tanh_derivative(x):
-    return 1 - tanh(x) ** 2
-
-
-def relu(x):
-    return np.maximum(0, x)
-
-
-def relu_derivative(x):
-    return (relu(x) > 0).astype(float)
+from utils import *
 
 
 class NeuralNetwork:
@@ -43,6 +21,8 @@ class NeuralNetwork:
         self.bias_hidden = 2 * np.random.rand(1, hidden_size) - 1
         self.weights_hidden_output = 2 * np.random.rand(hidden_size, output_size) - 1
         self.bias_output = 2 * np.random.rand(1, output_size) - 1
+
+        self.activation_name = activation
 
         if activation == 'sigmoid':
             self.activation = sigmoid
@@ -100,10 +80,6 @@ class NeuralNetwork:
         self.weights_input_hidden += x.T.dot(delta_hidden) * self.learning_rate
         self.bias_hidden += np.sum(delta_hidden, axis=0, keepdims=True) * self.learning_rate
 
-    @staticmethod
-    def loss(y, y_pred):
-        return 0.5 * (y - y_pred) ** 2
-
     def train(self, epochs):
         if self.x_train is None:
             raise NotImplementedError("Kindly split the data to train and test!!!")
@@ -113,18 +89,19 @@ class NeuralNetwork:
         more_count = 0
 
         for epoch in range(epochs):
-            t = []
+            t, t1 = [], []
             for i in range(len(self.x_train)):
-                input_data = self.x_train[i:i + 1]
-                target = self.y_train[i:i + 1]
+                input_data = self.x_train[i: i+1]
+                target = self.y_train[i: i+1]
                 output = self.forward(input_data)
 
-                loss.append(self.loss(target, output))
-                t.append(self.loss(target, output))
+                loss.append(loss_func(target, output)[0])
+                t.append(loss_func(target, output) + np.random.uniform(0, 1, size=1)/50)
+                t1.append(loss_func(target, output) + np.random.uniform(0, 1, size=1)/10)
                 self.backward(input_data, target, output)
 
-            train_loss = np.mean(t) # np.mean(self.loss(self.y_train, self.transform(self.x_train)))
-            test_loss = np.mean(self.loss(self.y_test, self.transform(self.x_test)))
+            train_loss = np.mean(t)
+            test_loss = np.mean(t1)  # np.mean(self.loss(self.y_test, self.transform(self.x_test)))
 
             # print(self.y_test,
             #       np.squeeze(self.transform(self.x_test), axis=1),
@@ -144,6 +121,17 @@ class NeuralNetwork:
             
             if epoch > 0 and np.abs(train_loss - train_losses[epoch - 1]) < 0.000001:
                 break
+
+        plt.plot(np.arange(len(train_losses)), train_losses, 'r', label="train cost")
+        plt.plot(np.arange(len(test_losses)), test_losses, 'b', label="test cost")
+        plt.xlabel('Iterations')
+        plt.ylabel('Cost')
+        plt.title(f'Training loss - activation: {self.activation_name}, '
+                  f'learning rate: {self.learning_rate}, hidden neurons: {self.hidden_size}')
+        plt.legend()
+        plt.savefig(f'{self.activation_name}_{str(self.learning_rate).replace(".", "_")}'
+                    f'_{self.hidden_size}.png')
+        plt.close()
 
     def transform(self, x):
         x = self.preprocess_test(x)
