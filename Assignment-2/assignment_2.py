@@ -1,9 +1,11 @@
 import pandas as pd
 from model import NeuralNetwork
 
+import warnings
+warnings.filterwarnings("ignore")
 
 data = pd.read_csv(
-    '/Users/chaitanyabasava/IdeaProjects/CS6375-004-Assignments/Assignment-2/NHANES_age_prediction.csv'
+    'https://raw.githubusercontent.com/chaitanya-basava/CS6375-004-Assignment-1-data/main/NHANES_age_prediction.csv'
 )
 data.drop(["RIAGENDR"], axis=1)
 classes = ['Adult', 'Senior']
@@ -15,7 +17,7 @@ columns = ["RIDAGEYR", "BMXBMI", "LBXGLU", "DIQ010", "LBXGLT", "LBXIN"]
 param_grid = {
     'activation': ['sigmoid', 'tanh', 'relu'],
     'learning_rate': [0.001, 0.01, 0.1],
-    'hidden_size': [4, 8, 16]
+    'hidden_size': [8, 16, 32]
 }
 
 if __name__ == "__main__":

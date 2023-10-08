@@ -5,7 +5,6 @@ from sklearn.model_selection import train_test_split
 
 
 def sigmoid(x):
-    x = np.float128(x)
     return 1 / (1 + np.exp(-x))
 
 
@@ -83,7 +82,7 @@ class NeuralNetwork:
 
     def forward(self, x):
         self.hidden_layer_output = self.activation(x.dot(self.weights_input_hidden) + self.bias_hidden)
-        self.output_layer_output = self.activation(
+        self.output_layer_output = sigmoid(
             self.hidden_layer_output.dot(self.weights_hidden_output) + self.bias_output)
 
         return self.output_layer_output
@@ -91,7 +90,7 @@ class NeuralNetwork:
     def backward(self, x, y, output):
         error = y - output
 
-        delta_output = error * self.activation_derivative(output)
+        delta_output = error * sigmoid_derivative(output)
         error_hidden = delta_output.dot(self.weights_hidden_output.T)
         delta_hidden = error_hidden * self.activation_derivative(self.hidden_layer_output)
 
@@ -111,18 +110,20 @@ class NeuralNetwork:
 
         loss, train_losses, test_losses = [], [], []
 
-        # more_count = 0
+        more_count = 0
 
         for epoch in range(epochs):
+            t = []
             for i in range(len(self.x_train)):
                 input_data = self.x_train[i:i + 1]
                 target = self.y_train[i:i + 1]
                 output = self.forward(input_data)
 
                 loss.append(self.loss(target, output))
+                t.append(self.loss(target, output))
                 self.backward(input_data, target, output)
 
-            train_loss = np.mean(self.loss(self.y_train, self.transform(self.x_train)))
+            train_loss = np.mean(t) # np.mean(self.loss(self.y_train, self.transform(self.x_train)))
             test_loss = np.mean(self.loss(self.y_test, self.transform(self.x_test)))
 
             # print(self.y_test,
@@ -134,15 +135,15 @@ class NeuralNetwork:
 
             print(f"EPOCH {epoch} - TRAIN LOSS: {train_loss} - TEST LOSS: {test_loss}")
 
-            # if train_loss > train_losses[epoch - 1]:
-            #     more_count += 1
-            #     if more_count > 10:
-            #         break
-            # else:
-            #     more_count = 0
-            #
-            # if epoch > 0 and np.abs(train_loss - train_losses[epoch - 1]) < 0.000001:
-            #     break
+            if train_loss > train_losses[epoch - 1]:
+                more_count += 1
+                if more_count > 25:
+                    break
+            else:
+                more_count = 0
+            
+            if epoch > 0 and np.abs(train_loss - train_losses[epoch - 1]) < 0.000001:
+                break
 
     def transform(self, x):
         x = self.preprocess_test(x)
