@@ -111,6 +111,7 @@ class NeuralNetwork:
 
             print(f"EPOCH {epoch} - TRAIN LOSS: {train_loss} - TEST LOSS: {test_loss}")
 
+            """
             if train_loss > train_losses[epoch - 1]:
                 more_count += 1
                 if more_count > 25:
@@ -120,6 +121,7 @@ class NeuralNetwork:
             
             if epoch > 0 and np.abs(train_loss - train_losses[epoch - 1]) < 0.000001:
                 break
+            """
 
         plt.plot(np.arange(len(train_losses)), train_losses, 'r', label="train cost")
         plt.plot(np.arange(len(test_losses)), test_losses, 'b', label="test cost")
