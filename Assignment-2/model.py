@@ -89,19 +89,18 @@ class NeuralNetwork:
         more_count = 0
 
         for epoch in range(epochs):
-            t, t1 = [], []
+            t = []
             for i in range(len(self.x_train)):
                 input_data = self.x_train[i: i+1]
                 target = self.y_train[i: i+1]
                 output = self.forward(input_data)
 
                 loss.append(loss_func(target, output)[0])
-                t.append(loss_func(target, output) + np.random.uniform(0, 1, size=1)/50)
-                t1.append(loss_func(target, output) + np.random.uniform(0, 1, size=1)/10)
+                t.append(loss_func(target, output))
                 self.backward(input_data, target, output)
 
             train_loss = np.mean(t)
-            test_loss = np.mean(t1)  # np.mean(self.loss(self.y_test, self.transform(self.x_test)))
+            test_loss = np.mean(loss_func(self.y_test, self.transform(self.x_test)))
 
             # print(self.y_test,
             #       np.squeeze(self.transform(self.x_test), axis=1),
@@ -140,6 +139,9 @@ class NeuralNetwork:
     def get_preds(self, x):
         return (self.transform(x) >= 0.5).astype(int)
 
-    def accuracy(self, x, y):
+    def _accuracy(self, x, y):
         predictions = self.get_preds(x)
         return np.mean(predictions == y) * 100.
+
+    def train_test_accuracy(self):
+        return self._accuracy(self.x_train, self.y_train), self._accuracy(self.x_test, self.y_test)

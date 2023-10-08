@@ -7,7 +7,12 @@ warnings.filterwarnings("ignore")
 data = pd.read_csv(
     'https://raw.githubusercontent.com/chaitanya-basava/CS6375-004-Assignment-1-data/main/NHANES_age_prediction.csv'
 )
+
+print(data.shape)
 data.drop(["RIAGENDR"], axis=1)
+data = data.drop_duplicates().dropna()
+print(data.shape)
+
 classes = ['Adult', 'Senior']
 for i in range(len(classes)):
     data["age_group"].replace(classes[i], i, inplace=True)
@@ -40,8 +45,7 @@ if __name__ == "__main__":
 
                 nn.train(epochs=10000)
 
-                training_accuracy = nn.accuracy(nn.x_train, nn.y_train)
-                test_accuracy = nn.accuracy(nn.x_test, nn.y_test)
+                training_accuracy, test_accuracy = nn.train_test_accuracy()
 
                 param_results = {
                     'Parameters': params,
@@ -51,5 +55,4 @@ if __name__ == "__main__":
                 print(param_results)
                 results = pd.concat([results, pd.DataFrame([param_results])], ignore_index=True)
 
-    results_df = pd.DataFrame.from_dict(results)
-    results_df.to_csv('results.csv')
+    print(results)
