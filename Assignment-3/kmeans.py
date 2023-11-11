@@ -67,21 +67,18 @@ class KMeansClustering:
     def compute_sse(self, x, _labels):
         sse = 0.0
         for i in range(self.n_clusters):
-            centroid = self.centroids[i]
             cluster_points = [x[j] for j in range(len(x)) if _labels[j] == i]
             for point in cluster_points:
-                distance = jaccard_distance(set(centroid), set(point))
-                sse += distance ** 2  # Squaring the Jaccard distance
+                sse += jaccard_distance(set(self.centroids[i]), set(point)) ** 2
         return sse
 
 
 if __name__ == "__main__":
-    df = pd.read_csv(
+    preprocessor = Preprocess(
         "https://raw.githubusercontent.com/chaitanya-basava/CS6375-004-Assignment-1-data/main/bbchealth.txt",
-        names=['id', 'datetime', 'tweet'], sep='|'
-    )[:100]
-    preprocessor = Preprocess()
-    preprocessed_tweets = preprocessor(df)
+        ['id', 'datetime', 'tweet']
+    )
+    preprocessed_tweets = preprocessor()[:100]
 
     kmeans = KMeansClustering(n_clusters=10, max_iter=100)
 

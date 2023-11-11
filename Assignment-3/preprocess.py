@@ -29,9 +29,10 @@ def to_lowercase(tweet):
 
 
 class Preprocess:
-    def __init__(self):
+    def __init__(self, link: str, col_names):
         self.lemmatizer = WordNetLemmatizer()
         self.stop_words = set(stopwords.words('english'))
+        self._tweets = pd.read_csv(link, names=col_names, sep='|')
 
     def _tokenize_and_lemmatize(self, tweet):
         tokens = word_tokenize(tweet)
@@ -49,20 +50,17 @@ class Preprocess:
         tokens = self._remove_stop_words(tokens)
         return set(tokens)
 
-    def __call__(self, _tweets: pd.DataFrame) -> pd.DataFrame:
-        df = _tweets.copy()
+    def __call__(self) -> pd.DataFrame:
+        df = self._tweets.copy()
         df['tokens'] = df['tweet'].apply(self._process_tweet)
         return df
 
 
 if __name__ == "__main__":
-    # test preprocessing
-    tweets = pd.read_csv(
+    preprocessor = Preprocess(
         "https://raw.githubusercontent.com/chaitanya-basava/CS6375-004-Assignment-1-data/main/bbchealth.txt",
-        names=['id', 'datetime', 'tweet'], sep='|'
+        ['id', 'datetime', 'tweet']
     )
-
-    preprocessor = Preprocess()
-    preprocessed_tweets = preprocessor(tweets)
+    preprocessed_tweets = preprocessor()
 
     print(preprocessed_tweets.head(10).to_string(index=False))
