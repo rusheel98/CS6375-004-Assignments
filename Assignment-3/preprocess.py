@@ -30,9 +30,10 @@ def to_lowercase(tweet):
 
 class Preprocess:
     def __init__(self, link: str, col_names):
+        self.link = link
+        self.col_names = col_names
         self.lemmatizer = WordNetLemmatizer()
         self.stop_words = set(stopwords.words('english'))
-        self._tweets = pd.read_csv(link, names=col_names, sep='|')
 
     def _tokenize_and_lemmatize(self, tweet):
         tokens = word_tokenize(tweet)
@@ -50,9 +51,18 @@ class Preprocess:
         tokens = self._remove_stop_words(tokens)
         return set(tokens)
 
-    def __call__(self) -> pd.DataFrame:
-        df = self._tweets.copy()
+    def __call__(self, print_empty=False) -> pd.DataFrame:
+        df = pd.read_csv(self.link, names=self.col_names, sep='|')
         df['tokens'] = df['tweet'].apply(self._process_tweet)
+
+        if print_empty:
+            empty_sets = df['tokens'].apply(lambda x: len(x) == 0)
+            empty_rows = df[empty_sets]
+            print(empty_rows.head(10).to_string(index=False))
+
+        non_empty_sets = df['tokens'].apply(lambda x: len(x) > 0)
+        df = df[non_empty_sets].reset_index(drop=True)
+
         return df
 
 
@@ -61,6 +71,6 @@ if __name__ == "__main__":
         "https://raw.githubusercontent.com/chaitanya-basava/CS6375-004-Assignment-1-data/main/bbchealth.txt",
         ['id', 'datetime', 'tweet']
     )
-    preprocessed_tweets = preprocessor()
+    preprocessed_tweets = preprocessor(True)
 
     print(preprocessed_tweets.head(10).to_string(index=False))

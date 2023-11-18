@@ -7,6 +7,9 @@ from preprocess import Preprocess
 def jaccard_distance(arg1, arg2):
     intersection = len(arg1.intersection(arg2))
     union = len(arg1.union(arg2))
+    if union == 0:
+        print(arg1, arg2)
+
     return 1 - intersection / union
 
 
@@ -37,6 +40,8 @@ class KMeansClustering:
             cluster = [x[j] for j in range(len(x)) if _labels[j] == i]
             if cluster:
                 new_centroid = set(max(cluster, key=cluster.count))
+                if len(new_centroid) == 0:
+                    print(cluster)
                 new_centroids.append(new_centroid)
         return new_centroids
 
@@ -66,7 +71,7 @@ class KMeansClustering:
 
     def compute_sse(self, x, _labels):
         sse = 0.0
-        for i in range(self.n_clusters):
+        for i in range(len(self.centroids)):
             cluster_points = [x[j] for j in range(len(x)) if _labels[j] == i]
             for point in cluster_points:
                 sse += jaccard_distance(set(self.centroids[i]), set(point)) ** 2
